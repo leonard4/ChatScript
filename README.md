@@ -7,4 +7,4 @@ The window size for the chat box is defined at the top, you could adjust this to
 
 There's a class for ChatEntry, which contains the things that you see in the chat, like time, name, and text. The OnGUI function will show the chat box if the showchat boolean is true, this allows you to hide and show the chat window at will.
 
-So far the window works like most chat windows would, enter will focus it, pressing escape will focus out. You can lock and unlock the window with the lock icons in the top right. There's also a rudimentary slash command function setup so you could create special functions or things to run through chat commands in game.
+So far the window works like most chat windows would, enter will focus it, pressing escape will focus out. You can lock and unlock the window with the lock icons in the top right. You can also drag the window around while its unlocked. I'll probably add a resize option in the future as well. There's also a rudimentary slash command function setup so you could create special functions or things to run through chat commands in game.
