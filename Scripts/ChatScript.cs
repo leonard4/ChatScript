@@ -9,10 +9,10 @@ public class ChatScript : MonoBehaviour {
     // this puts it in the bottom left corner by default
     Rect windowSize = new Rect(5, Screen.height - 255, 375, 250);
     // Can we currently move the window?
-	bool windowLocked = false;
+    bool windowLocked = false;
     
     // Our textures for the lock and unlock icons
-	public Texture lockIcon;
+    public Texture lockIcon;
     public Texture unlockIcon;
 	
     // Display the chat window?
@@ -171,8 +171,8 @@ public class ChatScript : MonoBehaviour {
     // Check if our chat command had a slash in it "/"
     void parseChatCommand(string command)
     {
-		if(command.Length > 0)
-			if (command.Substring(0,1) == "/")	// Could also use command[0] or command.StartsWith("/")
-				AddChatEntry(DateTime.Now, "Strom", "Slash Command: " + command.Substring(1, command.Length - 1));
+	if(command.Length > 0)
+	    if (command.Substring(0,1) == "/")	// Could also use command[0] or command.StartsWith("/")
+		AddChatEntry(DateTime.Now, "Strom", "Slash Command: " + command.Substring(1, command.Length - 1));
     }
 }
