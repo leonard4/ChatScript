@@ -27,18 +27,34 @@ public class ChatScript : MonoBehaviour {
     string chatString = "Enter text here";
     string lastString = "Enter text here";
 
+    // Chat color variables
+    int colorLength = 0;
+    string tmpColorStr = string.Empty;
+    bool showChatColor = true;
+
     class ChatEntry
     {
         // Three elements to a chat message: Time, Name, and Text
         public DateTime timeStamp;
+        public Color textColor = Color.white;
         public string name = "";
         public string text = "";
 
         public ChatEntry()
         {
             timeStamp = DateTime.Now;
+            textColor = Color.white;
             name = "Unknown";
             text = "Blank text";
+        }
+
+        // TimeStamp, Color, Name, Text
+        public ChatEntry(DateTime aTime, Color tColor, string aName, string aText)
+        {
+            timeStamp = aTime;
+            textColor = tColor;
+            name = aName;
+            text = aText;
         }
 
         // TimeStamp, Name, Text
@@ -122,10 +138,10 @@ public class ChatScript : MonoBehaviour {
                 // We've pressed enter, time to do stuff!
                 if (e.keyCode == KeyCode.Return)
                 {
-                    // Add an entry to the list
-                    chatEntry.Add(new ChatEntry(DateTime.Now, "Strom:", chatString));
                     // Send our string to the parser to see if it has a / in front for a command
                     parseChatCommand(chatString);
+                    // Add an entry to the list
+                    chatEntry.Add(new ChatEntry(DateTime.Now, "Strom:", chatString));
                     // Set our laststring to our chatstring, this way we don't say the same thing over and over
                     lastString = chatString;
                     chatString = String.Empty;
@@ -137,11 +153,74 @@ public class ChatScript : MonoBehaviour {
             // Build our string from our chat entries
             foreach (ChatEntry tmpChat in chatEntry)
             {
-                if (showChatTime)
-                    tmpString += tmpChat.timeStamp + " " + tmpChat.name + " " + tmpChat.text + "\n";
+				// Can use color codes at the front of each chat line in two styles:
+				// First
+				// #red#This line will be red!
+				
+				// Second
+				// #ff0000#This line will also be red!
+				
+				// So far we only parse for 3 colors, red, green, and blue, but all RGB hex colors will work using the #xxyyzz# style
+                if(showChatColor)
+                {
+                    // Check if our first character is a #
+                    if (tmpChat.text.Substring(0, 1) == "#")
+                    {
+                        // Now we check to see if we specified red and closed with a color character
+                        if (tmpChat.text.Substring(1, 4).ToLower().Contains("red#"))
+                        {
+                            tmpColorStr = "#ff0000";
+                            colorLength = 5;
+                        }
+                        // and green with a color character
+                        else if (tmpChat.text.Substring(1, 6).ToLower().Contains("green#"))
+                        {
+                            tmpColorStr = "#00ff00";
+                            colorLength = 7;
+                        }
+                        // and blue with a color character
+                        else if (tmpChat.text.Substring(1, 5).ToLower().Contains("blue#"))
+                        {
+                            tmpColorStr = "#0000ff";
+                            colorLength = 6;
+                        }
+                        // No word found from above, check for hex color and closing color character
+                        else
+                        {
+                            // if have a format of #xxyyzz# then we can do a color
+                            if (tmpChat.text.Substring(7, 1) == "#")
+                            {
+                                tmpColorStr = tmpChat.text.Substring(0, 7);
+                                colorLength = 8;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        tmpColorStr = "#ffffff";
+                        colorLength = 0;
+                    }
+                    // Color and chat time
+                    if(showChatTime)
+                        tmpString += tmpChat.timeStamp + " " + tmpChat.name + " <color=" + tmpColorStr + ">" + tmpChat.text.Substring(colorLength) + "</color>\n";
+                    else
+                        // Color and no chat time
+                        tmpString += tmpChat.name + " <color=" + tmpColorStr + ">" + tmpChat.text.Substring(colorLength) + "</color>\n";
+                }
+                // No color
                 else
-                    tmpString += tmpChat.name + " " + tmpChat.text + "\n";
+                    if (showChatTime)
+                        tmpString += tmpChat.timeStamp + " " + tmpChat.name + " " + tmpChat.text + "\n";
+                    else
+                        // No color and no chat time
+                        tmpString += tmpChat.name + " " + tmpChat.text + "\n";
+               
             }
+
+            GUIStyle textStyle = new GUIStyle();
+            textStyle.normal.textColor = Color.white;
+            textStyle.wordWrap = true;
+            textStyle.richText = true;
 
             innerText = tmpString;
 
@@ -150,7 +229,7 @@ public class ChatScript : MonoBehaviour {
             scrollViewVector = GUI.BeginScrollView(new Rect(2, 18, windowSize.width - 10, 200), scrollViewVector, new Rect(0, 0, windowSize.width - 28, 500));
 
             // Set our textarea to our huge chat string
-            innerText = GUI.TextArea(new Rect(0, 0, windowSize.width - 24, 500), innerText);
+            innerText = GUI.TextArea(new Rect(0, 0, windowSize.width - 24, 500), innerText, textStyle);
 
             // End the ScrollView
             GUI.EndScrollView();
@@ -174,5 +253,11 @@ public class ChatScript : MonoBehaviour {
 	if(command.Length > 0)
 	    if (command.Substring(0,1) == "/")	// Could also use command[0] or command.StartsWith("/")
 		AddChatEntry(DateTime.Now, "Strom", "Slash Command: " + command.Substring(1, command.Length - 1));
+    }
+
+    void colorChatString()
+    {
+
+
     }
 }
