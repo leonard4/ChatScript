@@ -23,9 +23,9 @@ Customizable color dictionary with user editable values
 
 Usage:
 ---------
-  #red#This line will be red!
+\#red#This line will be red!
 
-  #00ff00#This line will be bright green!
+\#00ff00#This line will be bright green!
 
-  #000000#This line will be black!
+\#000000#This line will be black!
 
