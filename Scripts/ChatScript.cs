@@ -31,8 +31,24 @@ public class ChatScript : MonoBehaviour {
     int colorLength = 0;
     string tmpColorStr = string.Empty;
     bool showChatColor = true;
-	List<string> colors = new List<string>();
+	//List<string> colors = new List<string>();
+    List<Colors> colorList = new List<Colors>() { 
+                                                    new Colors("red",        "#ff0000"),
+                                                    new Colors("blue",       "#0000ff"),
+                                                    new Colors("green",      "#00ff00"),
+                                                   };
 	
+    struct Colors {
+        public string colorName;
+        public string colorValue;
+
+        public Colors(string name, string value)
+        {
+           colorName = name;
+           colorValue = value;
+        }
+    };
+
     class ChatEntry
     {
         // Three elements to a chat message: Time, Name, and Text
@@ -68,6 +84,12 @@ public class ChatScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        //foreach (Colors tmpColor in colorList)
+        //{
+        //    Debug.Log(tmpColor.colorName + ", " + tmpColor.colorValue);
+        //}
+
         // This will cause the chat window to be focused at start up
         //GUI.FocusControl("chatinput");
 	}
@@ -151,6 +173,13 @@ public class ChatScript : MonoBehaviour {
                     // Check if our first character is a #
                     if (tmpChat.text.Substring(0, 1) == "#")
                     {
+                        // Start of using a list of colors instead of hardcoded
+                        //foreach (Colors tmpColor in colorList)
+                        //{
+                        //    if(tmpColor.colorName == tmpChat.text.Substring(0, 1)
+                        //    Debug.Log(tmpColor.colorName + ", " + tmpColor.colorValue);
+                        //}
+
                         // Now we check to see if we specified red and closed with a color character
                         if (tmpChat.text.Substring(1, 4).ToLower().Contains("red#"))
                         {
