@@ -31,30 +31,20 @@ public class ChatScript : MonoBehaviour {
     int colorLength = 0;
     string tmpColorStr = string.Empty;
     bool showChatColor = true;
-
+	List<string> colors = new List<string>();
+	
     class ChatEntry
     {
         // Three elements to a chat message: Time, Name, and Text
         public DateTime timeStamp;
-        public Color textColor = Color.white;
         public string name = "";
         public string text = "";
 
         public ChatEntry()
         {
             timeStamp = DateTime.Now;
-            textColor = Color.white;
             name = "Unknown";
             text = "Blank text";
-        }
-
-        // TimeStamp, Color, Name, Text
-        public ChatEntry(DateTime aTime, Color tColor, string aName, string aText)
-        {
-            timeStamp = aTime;
-            textColor = tColor;
-            name = aName;
-            text = aText;
         }
 
         // TimeStamp, Name, Text
@@ -81,12 +71,7 @@ public class ChatScript : MonoBehaviour {
         // This will cause the chat window to be focused at start up
         //GUI.FocusControl("chatinput");
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
-	
     void OnGUI()
     {
         // Create our window
