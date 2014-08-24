@@ -9,21 +9,23 @@ There's a class for ChatEntry, which contains the things that you see in the cha
 
 So far the window works like most chat windows would, enter will focus it, pressing escape will focus out. You can lock and unlock the window with the lock icons in the top right. You can also drag the window around while its unlocked. I'll probably add a resize option in the future as well. There's also a rudimentary slash command function setup so you could create special functions or things to run through chat commands in game.
 
----------
+
 Features:
+---------
 Color codes in two styles, either #color# or #rrggbb# (web hex rgb)
 Currently only colors per line if it starts with the color code, per word coming soon
 
 Coming Soon:
+---------
 Per word color instead of per line
 Customizable color dictionary with user editable values
 
----------
 
 Usage:
-#red#This line will be red!
+---------
+  #red#This line will be red!
 
-#00ff00#This line will be bright green!
+  #00ff00#This line will be bright green!
 
-#000000#This line will be black!
+  #000000#This line will be black!
 
