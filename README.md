@@ -13,11 +13,13 @@ So far the window works like most chat windows would, enter will focus it, press
 Features:
 ---------
 Color codes in two styles, either #color# or #rrggbb# (web hex rgb)
+
 Currently only colors per line if it starts with the color code, per word coming soon
 
 Coming Soon:
 ---------
 Per word color instead of per line
+
 Customizable color dictionary with user editable values
 
 
